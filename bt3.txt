@@ -1,0 +1,20 @@
+Phần 1: Phân tích 
+
+Khác với CMD chỉ chuyền chữ, PowerShell chuyền cả object qua dấu |:
+javascript
+[access.log] 
+    |
+    v
+(1) Select-String "TIMEOUT"  -->  Trả về các OBJECT chứa {Tên file + Số dòng + Nội dung dòng}
+    |
+    v
+(2) Where-Object { NOT TIMEOUT }  -->  Lọc lại lần 2, loại bỏ object nào có chứa "NOT TIMEOUT" để không đếm nhầm
+    |
+    v
+(3) .Count  -->  Lấy thuộc tính Count của đống object còn lại để ra 1 con số duy nhất
+
+
+
+Phần 2: Triển Khai
+
+Select-String -Path access.log -Pattern "TIMEOUT" | Where-Object { $_ -notmatch "NOT TIMEOUT" }.Count
